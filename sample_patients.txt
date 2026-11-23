@@ -1,0 +1,2 @@
+101|Ali Ahmed|25|Male|03001234567|Fever
+102|Sara Khan|30|Female|03119876543|Checkup
