@@ -1,0 +1,2 @@
+1001|101|Ali Ahmed|Dr. Khan|2026-12-01|10:30|Completed
+1002|102|Sara Khan|Dr. Malik|2026-12-01|11:00|Cancelled
