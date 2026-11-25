@@ -36,10 +36,24 @@ public:
         this->contact = contact;
         this->disease = disease;
     }
+
     void display()
     {
         cout << "ID=" << id << "|Name=" << name << "|Age=" << age << "|Gender="
             << gender << "|Contact=" << contact << "|Disease=" << disease << endl;
+    }
+     static bool isLettersOnly(const string& s)
+    {
+        if (s.empty()) return false;
+        for (string::size_type i = 0; i < s.length(); i++)
+        {
+            char c = s[i];
+            if (!((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')))
+            {
+                return false;
+            }
+        }
+        return true;
     }
 };
 class PatientNode
@@ -236,6 +250,7 @@ public:
             temp = temp->next;
         }
     }
+   
 };
 
 

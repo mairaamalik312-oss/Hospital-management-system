@@ -150,6 +150,25 @@ namespace UI {
             }
         }
     }
+    string lettersOnly(const string& label, size_t maxLength = 45,
+                       const string& oldValue = "") {
+        while (true) {
+            cout << "  " << cyan << label << reset;
+            if (!oldValue.empty()) cout << " " << dim << "[" << oldValue << "]" << reset;
+            cout << ": ";
+            string value = line();
+            if (value.empty() && !oldValue.empty()) return oldValue;
+            if (value.empty()) {
+                error("This field cannot be empty.");
+            } else if (value.size() > maxLength) {
+                error("Maximum length: " + to_string(maxLength) + " characters.");
+            } else if (!Patient::isLettersOnly(value)) {
+                error("Letters only (A-Z). No numbers, spaces or symbols.");
+            } else {
+                return value;
+            }
+        }
+    }
 
     bool confirm(const string& question) {
         while (true) {
@@ -235,9 +254,9 @@ static void registerPatient(PatientList& patients) {
         UI::error("That Patient ID is already registered.");
         return;
     }
-    string name = UI::text("Full name", 45);
+    string name = UI::lettersOnly("Name (letters only)", 45);
     int age = UI::number("Age", 0, 130);
-    string gender = UI::text("Gender", 20);
+    string gender = UI::lettersOnly("Gender", 20);
     string contact = UI::text("Contact number", 30);
     string disease = UI::text("Disease / reason for visit", 65);
 
@@ -287,9 +306,9 @@ static void updatePatient(PatientList& patients) {
     cout << "\n  Current record:\n";
     tableHeader(); patientRow(found->data); tableFooter();
     UI::info("Press ENTER to keep a current text value.");
-    string name = UI::text("Full name", 45, found->data.name);
+    string name = UI::lettersOnly("Name (letters only)", 45, found->data.name);
     int age = UI::numberOrKeep("Age", found->data.age, 0, 130);
-    string gender = UI::text("Gender", 20, found->data.gender);
+    string gender = UI::lettersOnly("Gender", 20, found->data.gender);
     string contact = UI::text("Contact", 30, found->data.contact);
     string disease = UI::text("Disease / reason for visit", 65, found->data.disease);
     if (patients.updatePatient(id, name, age, gender, contact, disease))
